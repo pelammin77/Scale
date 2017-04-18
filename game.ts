@@ -15,7 +15,7 @@
             let infoText;
             let  kierroksenKuulat : number;
             let   sallittuErotus:number;
-           let taso : number;
+            let taso : number;
             let pallojaKaytossa : number;
             let erotus : number;
             const MAX_KIERROKSET = 4;
@@ -27,92 +27,76 @@
             const VAAKAN_KITKA = 400;
             const VAAKANY = 600;
             var kuppi;
-//-----------------------------------------------------------------------------------            
-        
-    // Game Boot state class      
-  //------------------------------------------------------------------------
-        class BootState extends Phaser.State{
-
-        constructor(){
-            super(); 
-        }
+//-----------------------------------------------------------------------------------
+    // Game Boot state class
+  //--------------------------------------------------------------------------------
+    class BootState extends Phaser.State{
+      constructor(){
+      super();
+}
 //---------------------------------------------------------------------
-           //phaser crreate-function 
-            create(){
-                game.state.start('preload');
+    //phaser crreate-function 
+    create(){
+        game.state.start('preload');
             }
-            }
-
+}
+//End Of class 
 //-----------------------------------------------------------
-     //preload-state 
-        class PreloadState extends Phaser.State{
-
-
-
-            preload(){
-
-             /* 
-            loads assets 
-            */
-           
-            game.load.image('vaaka', 'kuvat/vaaka.png');
-            game.load.image('kuula', 'kuvat/kuula.png');
-            game.load.image('tausta1','kuvat/sky1.png');
-            game.load.image('labelMessage','kuvat/message_label.png');
-             game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-                }
-
-        create(){
-            //scale game to screen
-            game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL ;
-             game.scale.pageAlignHorizontally = true;
-             game.scale.pageAlignVertically = true;
-             game.scale.updateLayout();
-
-            game.state.start('title');
-        }
-            }
-
-
-
-
+//preload-state 
+//-----------------------------------------------------------
+    class PreloadState extends Phaser.State{
+    
+    preload(){
+        game.load.image('vaaka', 'kuvat/vaaka.png');
+        game.load.image('kuula', 'kuvat/kuula.png');
+        game.load.image('tausta1','kuvat/sky1.png');
+        game.load.image('labelMessage','kuvat/message_label.png');
+        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+}
+//--------------------------------------------------------------------------------------------------
+    create(){
+        //scale game to screen
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL ;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        game.scale.updateLayout();
+        game.state.start('title');
+        }            }
+//---------------------------------------------------------------------------------------
 //Mainmenu/title-screen state 
 //----------------------------------------------------------------------------------
-        class TitleState extends Phaser.State{
-
-        WebFontConfig = {
-
-    active: function() { game.time.events.add(Phaser.Timer.SECOND, this.createText, this); },
-    google: {
-    families: ['Revalia']
-    }
+    class TitleState extends Phaser.State{
+      WebFontConfig = {
+      active: function() { game.time.events.add(Phaser.Timer.SECOND, this.createText, this); },
+      google: {
+      families: ['Revalia']}
 };
+//-------------------------------------------------------------------------
     create(){
      game.stage.backgroundColor = "C3C3C3";
-     taso = 1;    
+     taso = 1;
      this.createText();
      game.input.onTap.addOnce(this.aloita);
     }
 //------------------------------------------------------------------------
-   createText(){ 
-      var text= null; 
-      var style = { }; 
+   createText(){
+      var text= null;
+      var style = { };
       text = game.add.text(game.world.centerX, 100,"SCALE" ,style);
       text.anchor.setTo(0.5);
       text.font = 'Revalia';
       text.fontSize = 80;
       var grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
-      grd.addColorStop(0, '#8ED6FF');   
+      grd.addColorStop(0, '#8ED6FF');
       grd.addColorStop(1, '#004CB3');
       text.fill = grd;
-
       text.align = 'center';
       text.stroke = '#000000';
       text.strokeThickness = 2;
       text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
 }
 //----------------------------------------------------------------
-//start level 
+//start level
  //--------------------------------------------------------------
      aloita()
      {
@@ -125,7 +109,7 @@
 //----------------------------------------------------------------
   class PreLevelState extends Phaser.State{
 
-//sets up Webfonts 
+//sets up Webfonts
     WebFontConfig = {
     active: function() { game.time.events.add(Phaser.Timer.SECOND, this.createText, this); },
     google: {
@@ -138,17 +122,17 @@
       this.createText();
       game.input.onTap.addOnce(this.aloitaPeli);
     }
- //-----------------------------------------------------------------------------          
+ //-----------------------------------------------------------------------------
     createText(){
-      var text= null; 
-      var style = { }; 
+      var text= null;
+      var style = { };
       text = game.add.text(game.world.centerX, game.world.centerY,"Level "+taso+"\n" +"Available balls " + kierroksenKuulat
       + "\n Max distance "+ sallittuErotus ,style);
       text.anchor.setTo(0.5);
       text.font = 'Revalia';
       text.fontSize = 80;
       var grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
-      grd.addColorStop(0, '#8ED6FF');   
+      grd.addColorStop(0, '#8ED6FF');
       grd.addColorStop(1, '#004CB3');
       text.fill = grd;
       text.align = 'center';
@@ -157,18 +141,18 @@
       text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
 }
 //-----------------------------------------------------------------------------------
-//launch gameOn state 
+//launch gameOn state
 //-------------------------------------------------------------------------------------
     aloitaPeli(){
       game.state.start("gameOn");
       }
  }
 //----------------------------------------------------------------------------------------
-//GameOnState class 
-//manage  game 
+//GameOnState class
+//manage  game
 //----------------------------------------------------------------------------------------
     class GameOnState extends Phaser.State{
-        //class fields 
+        //class fields
        pelaajanVuoro:boolean;
         tausta:any;
         kuula : Phaser.Sprite;
@@ -197,14 +181,18 @@
         this.luoUusiKierros();
     }
 //------------------------------------------------------------------------------------
+//change level 
+//-----------------------------------------------------------------------------------------
     vaihdaTaso(){
       this.kierros = 1;
       taso++;
       game.state.start('preLevel');
     }
 //---------------------------------------------------------------------------------------
+//greates new level
+//---------------------------------------------------------------------------------------
     luoUusiKierros(){
-       if(this.kierros>MAX_KIERROKSET){ 
+       if(this.kierros>MAX_KIERROKSET){
          this.vaihdaTaso();
         }
      asetaTasonTiedot();
@@ -224,7 +212,8 @@
       this.koneLuoKuulat();
    }
 //------------------------------------------------------------------------------------
-
+//calculates scale + balls  mass
+//--------------------------------------------
    laskePaino(){
 
     if(this.onkoVaakaTasapainossa()==true){
@@ -274,6 +263,9 @@
        return false;
    }
 //------------------------------------------------------------------------------------
+//checks if scale diffrence is pass
+//-------------------------------------------------------------------------------------
+
     onkoSallituissaRajoissa():boolean{
      if(this.painonMuutos <= sallittuErotus){ 
       return true;
@@ -282,6 +274,8 @@
       return false;
      }
 }
+//------------------------------------------------------------------------------------------
+//update ball size when player holds button down
 //------------------------------------------------------------------------------------------
     update(){
      if(this.kuulaKasvaa==true&&this.kuula.width<KUULAN_MAX_KOKO){
@@ -373,16 +367,19 @@
     pelaajaLuoKuulan(){
 
         if(kierroksenKuulat < 1) return;
-        if(this.vaakaTasapainossa == true) return;
-         this.pelaajanVuoro = true; 
-        this.kuulanLuonti(game.input.worldX, game.input.worldY, 1,1);  
+        if(this.vaakaTasapainossa == true) 
+        {
+          return;
+        }
+         this.pelaajanVuoro = true;
+        this.kuulanLuonti(game.input.worldX, game.input.worldY, 1,1);
         this.vaaka[ kuppi].add(this.kuula);
         game.input.onDown.remove(this.pelaajaLuoKuulan, this);
-		game.input.onUp.add(this.tiputaKuula, this);  
-        this.kuulaKasvaa = true;         
+		game.input.onUp.add(this.tiputaKuula, this);
+        this.kuulaKasvaa = true;
   }
 //------------------------------------------------------------------------------------
-//Grows the ball size  
+//Grows the ball size
 //---------------------------------------------------------------------------------------
     kasvataKuulaa(){
        // console.log("kasva");
@@ -395,10 +392,9 @@
     tiputaKuula(){
         this.kuulaKasvaa = false;
         game.input.onUp.remove(this.tiputaKuula,this);
-        
-        if(this.pelaajanVuoro == true){
+          if(this.pelaajanVuoro == true){
              kierroksenKuulat--;
-        }
+             }
         this.labelKierroksenKuulat.text = "Balls: "+kierroksenKuulat;
         var kuulanLiike = VAAKANY - this.kuula.height/2; 
         this.vaaka[kuppi].paino+=(4/3)*Math.PI*(this.kuula.width/2)*(this.kuula.width/2)*(this.kuula.width/2);
@@ -406,7 +402,6 @@
 						y: kuulanLiike }, 2000, Phaser.Easing.Bounce.Out, true);
 		ballTween.onComplete.add(this.liikutaVaakaa,this);
             }
-
     uusiKuulaVoiPudota(){
      game.input.onDown.add(this.pelaajaLuoKuulan,this);
     }
@@ -420,7 +415,7 @@
       google: {
         families: ['Revalia']}};
 //----------------------------------------------------------------------------------------------
-    create(){       
+    create(){
       game.stage.backgroundColor = "C3C3C3";
       this.createText();
      }
@@ -472,61 +467,49 @@
     game.state.add('preLevel', PreLevelState);
     game.state.add('gameOn', GameOnState);
     game.state.add('gameOver',GameOverState);
-
-
-
-
-
- function kirjoitaViesti(i){
-
-       var style;
-
-
+//-------------------------------------------------------------------------------
+// Creates and shows messagebox on screen 
+//------------------------------------------------------------------------------
+    function kirjoitaViesti(i){
+      var style;
       var text
-      
-      switch(i){
 
-        case 1: 
-        text = "Ballance the scale with " + kierroksenKuulat+" balls"+ 
-        "\n Maximum difference is "+this.sallittuErotus;
+    switch(i){
+      case 1:
+       text = "Ballance the scale with " + kierroksenKuulat+" balls"+ 
+                 "\n Maximum difference is "+this.sallittuErotus;
+      break;
 
-         break;
-
-        case 2:
+      case 2:
         text = "Perfect! Difference is 0\n "+
-    
-             "Difference:"+ erotus+
-            " Max difference was:"+sallittuErotus;
-             style = { font: "35px Arial", fill: "#19070B", align: "center" }; 
+               "Difference:"+ erotus+
+              " Max difference was:"+sallittuErotus;
+               style = { font: "35px Arial", fill: "#19070B", align: "center" }; 
 
          break;
          
-         case 3:
-         text = "You passed!\n"+ 
-             "Difference:"+ erotus+
-            " Max difference was:"+sallittuErotus
-               style = { font: "35px Arial", fill: "#19070B", align: "center" }; 
-               break;
+      case 3:
+        text = "You passed!\n"+ 
+                "Difference:"+ erotus+
+               " Max difference was:"+sallittuErotus
+                 style = { font: "35px Arial", fill: "#19070B", align: "center" };
+          break;
 
-         case 4: 
+         case 4:
             text = "GAME OVER\n"+
             "Scale separation is too great\n" +
            "Difference:"+ erotus+
            "\nMax difference was:"+sallittuErotus
-             style = { font: "35px Arial", fill: "#19070B", align: "center" };  
+             style = { font: "35px Arial", fill: "#19070B", align: "center" };
           break;
-}
-
-      
+    }
  game.add.text(100, 200, text,style);
-
-     }
-
-
-function asetaTasonTiedot(){
-  
-          switch(taso){
-
+}
+//-------------------------------------------------------------------------------------
+//Sets level info 
+//-------------------------------------------------------------------------------------
+    function asetaTasonTiedot(){
+      switch(taso){
               case 1:
                 kierroksenKuulat = 3;
                 sallittuErotus = 5;
@@ -556,14 +539,14 @@ function asetaTasonTiedot(){
                 kierroksenKuulat = 2;
                 sallittuErotus = 1;
                 break;
-            
+
             case 7:
                 kierroksenKuulat = 3;
                 sallittuErotus = 0;
                 break; 
 
             case 8:
-            kierroksenKuulat = 2;
+                kierroksenKuulat = 2;
                 sallittuErotus = 0;
 
             default:
@@ -571,7 +554,13 @@ function asetaTasonTiedot(){
         }
 
 }
-   
+
+
+
+
+
+//end of file 
+//--------------------------------------------------------------------------------------------
 
 
 
